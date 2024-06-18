@@ -2,16 +2,16 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1>Create New Customer</h1>
+        <h1>Aggiungi un nuovo cliente</h1>
         <v-form ref="form" @submit.prevent="createCustomer">
           <v-text-field
             ref="nameInput"
             v-model="name"
-            label="Customer Name"
+            label="Inserisci il nome del nuovo cliente"
             :rules="[rules.required]"
             required
           ></v-text-field>
-          <v-btn type="submit" color="primary">Create Customer</v-btn>
+          <v-btn type="submit" color="primary">Aggiungi nome alla lista</v-btn>
         </v-form>
       </v-col>
     </v-row>

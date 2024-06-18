@@ -2,10 +2,10 @@
   <v-container>
     <v-row v-if="authStore.user">
       <v-col cols="12">
-        <h1>Transaction Summary</h1>
+        <h1>Foglio debiti</h1>
         <v-checkbox
           v-model="hideZeroAmount"
-          label="Hide customers with Total Amount of zero"
+          label="Nascondi i clienti senza transazioni attive"
         ></v-checkbox>
         <button
           color="primary"
@@ -13,7 +13,7 @@
           class="download-btn"
           small
         >
-          Download as Excel
+          Scarica foglio Excel
         </button>
         <Grid :columns="headers" :data="filteredCustomerSummaries" />
       </v-col>

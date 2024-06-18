@@ -21,8 +21,8 @@
           <template v-if="authStore.user">
             <nav class="d-flex">
               <v-btn text to="/home">Home</v-btn>
-              <v-btn text to="/">Transaction Summary</v-btn>
-              <v-btn text to="/add-customer">Add New Customer</v-btn>
+              <v-btn text to="/">Foglio debiti</v-btn>
+              <v-btn text to="/add-customer">Aggiungi nuovo cliente</v-btn>
             </nav>
           </template>
         </v-col>

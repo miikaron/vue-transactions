@@ -60,7 +60,7 @@
 
         <v-col cols="12">
           <v-btn
-            :disabled="!isFormValid"
+            :disabled="isLoading || !isFormValid"
             type="submit"
             color="primary"
             class="responsive-btn"
@@ -98,6 +98,7 @@ const transactionType = ref([
 ]);
 const customerNames = ref([]);
 const toast = useToast();
+const isLoading = ref(false); // Add isLoading
 
 // Function to get today's date in YYYY-MM-DD format
 function getTodayDate() {
@@ -160,6 +161,8 @@ const addTransaction = async () => {
     return;
   }
 
+  isLoading.value = true; // Set isLoading to true
+
   // Ensure amount is negative if title is '-Paga debito'
   if (
     newTransaction.value.title === "-Paga debito" &&
@@ -178,85 +181,44 @@ const addTransaction = async () => {
   if (customerError) {
     console.error("Error fetching customer ID:", customerError);
     toast.error("Customer not found");
-    return;
-  }
-
-  // Create a timestamp for created_at
-  const createdAt = new Date().toISOString();
-
-  // Insert new transaction
-  const { error } = await supabase.from("transactions").insert([
-    {
-      title: newTransaction.value.title,
-      ts_amount: newTransaction.value.ts_amount,
-      accounting_date: newTransaction.value.accounting_date,
-      created_at: createdAt,
-      customer_id: customer.id,
-      ts_note: newTransaction.value.ts_note, // Insert ts_note field
-    },
-  ]);
-
-  if (error) {
-    console.error("Error adding transaction:", error);
-    toast.error("Error adding transaction");
   } else {
-    toast.success("Transaction added successfully!");
-    // Reset form and validation state after successful insert
-    newTransaction.value = {
-      title: "",
-      ts_amount: "",
-      accounting_date: getTodayDate(), // Reset to today's date
-      customer_name: "",
-      ts_note: "", // Reset ts_note
-    };
-    await nextTick(() => {
-      form.value.resetValidation(); // Reset form validation
-    });
+    // Create a timestamp for created_at
+    const createdAt = new Date().toISOString();
+
+    // Insert new transaction
+    const { error } = await supabase.from("transactions").insert([
+      {
+        title: newTransaction.value.title,
+        ts_amount: newTransaction.value.ts_amount,
+        accounting_date: newTransaction.value.accounting_date,
+        created_at: createdAt,
+        customer_id: customer.id,
+        ts_note: newTransaction.value.ts_note, // Insert ts_note field
+      },
+    ]);
+
+    if (error) {
+      console.error("Error adding transaction:", error);
+      toast.error("Error adding transaction");
+    } else {
+      toast.success("Transaction added successfully!");
+      // Reset form and validation state after successful insert
+      newTransaction.value = {
+        title: "",
+        ts_amount: "",
+        accounting_date: getTodayDate(), // Reset to today's date
+        customer_name: "",
+        ts_note: "", // Reset ts_note
+      };
+      await nextTick(() => {
+        form.value.resetValidation(); // Reset form validation
+      });
+    }
   }
+
+  isLoading.value = false; // Set isLoading back to false
 };
 
 // Fetch data on mounted
 onMounted(fetchCustomerNames);
 </script>
-
-<style scoped>
-.responsive-input,
-.responsive-btn {
-  width: 100%;
-}
-
-/* Responsive adjustments */
-@media (max-width: 960px) {
-  .responsive-input,
-  .responsive-btn {
-    font-size: 0.875rem; /* Smaller font size for medium devices */
-  }
-
-  .v-text-field,
-  .v-select,
-  .v-autocomplete,
-  .v-btn {
-    padding: 8px 16px; /* Adjust padding for medium devices */
-  }
-}
-
-@media (max-width: 600px) {
-  .responsive-input,
-  .responsive-btn {
-    font-size: 0.75rem; /* Smaller font size for small devices */
-  }
-
-  .v-text-field,
-  .v-select,
-  .v-autocomplete,
-  .v-btn {
-    padding: 6px 12px; /* Adjust padding for small devices */
-  }
-
-  /* Force form elements to adjust width for small screens */
-  .responsive-input,
-  .responsive-btn {
-    width: 100%; /* Ensure full width for inputs and buttons on small screens */
-  }
-}
-</style>
