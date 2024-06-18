@@ -44,7 +44,7 @@
           <h2 class="mt-4">Debiti pagati: {{ debitiPagatiContanti }}€</h2>
           <p>
             Debiti pagati = debiti pagati in contanti, che non includono nella
-            nota "bancomat", "ieri" o "mirko"
+            nota "bancomat", "cassa", "ieri" o "mirko"
           </p>
         </div>
       </v-col>
