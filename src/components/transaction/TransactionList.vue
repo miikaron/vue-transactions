@@ -44,7 +44,7 @@
           <h2 class="mt-4">Debiti pagati: {{ debitiPagatiContanti }}€</h2>
           <p>
             Debiti pagati = debiti pagati in contanti, che non includono nella
-            nota "bancomat", "cassa", "ieri" o "mirko"
+            nota "bancomat", "voucher", "cassa calcio", "ieri" o "mirko"
           </p>
         </div>
       </v-col>
@@ -206,6 +206,7 @@ const debitiPagatiContanti = computed(() => {
     .filter(
       (transaction) =>
         !transaction.ts_note.trim().toLowerCase().includes("bancomat") &&
+        !transaction.ts_note.trim().toLowerCase().includes("voucher") &&
         !transaction.ts_note.trim().toLowerCase().includes("mirko") &&
         !transaction.ts_note.trim().toLowerCase().includes("cassa") &&
         !transaction.ts_note.trim().toLowerCase().includes("ieri")
