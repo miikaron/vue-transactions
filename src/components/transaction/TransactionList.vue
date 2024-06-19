@@ -14,8 +14,8 @@
       <v-col cols="12" md="8"
         ><div class="scommesse">
           <p>
-            Scommesse (senza Mirko): {{ scommesseSum }}€ | Rimesse in cassa
-            calcio: {{ pagamentoVoucherOcassa.cassaCalcioSum }}€
+            Scommesse segnate: {{ scommesseSum }}€ | Rimesse in cassa calcio:
+            {{ pagamentoVoucherOcassa.cassaCalcioSum }}€
           </p>
           <h2 class="mb-4">
             Voucher:
@@ -23,26 +23,29 @@
             {{ scommesseSumTotal }}€
           </h2>
           <p>
-            Voucher = paga debito con "Ts_note" che contiene la scritta "VOUCHER" (scritto in maiuscolo o
+            Voucher = paga debito che include la nota "voucher" (maiuscolo o
             minuscolo è indifferente)
           </p>
           <p>
-            Scommesse (senza Mirko) = transazione con titolo "Scommesse" che non
-            contengono la nota "Mirko" o "#" (es: #ieri)
+            Scommesse segnate = transazione con titolo "Scommesse" che non
+            contengono la nota "mirko" o "#" (es: #ieri)
           </p>
           <p>
-            Rimesse in cassa calcio: "Paga debito" che include la nota "calcio" (es: cassa calcio)
+            Rimesse in cassa calcio: "Paga debito" che include la nota "calcio"
+            (es: cassa calcio)
           </p>
           <p>
-            Totale scommesse: "Scommesse" segnate tolte quelle "rimesse
-            in cassa calcio" e quelle di "Mirko"
+            Totale scommesse: "scommesse segnate" tolte quelle "rimesse in cassa
+            calcio" e quelle di "mirko"
           </p>
         </div>
 
         <div class="debiti">
-          <h2 class="mt-4">Debiti pagati: {{ debitiPagatiContanti }}€</h2>
+          <h2 class="mt-4">
+            Debiti pagati (contanti): {{ debitiPagatiContanti }}€
+          </h2>
           <p>
-            Debiti pagati = debiti pagati in contanti che non includono nella
+            Debiti pagati = transazioni "Paga debito" che non includono nella
             nota: "bancomat", "voucher", "cassa calcio", "mirko" o "#"
           </p>
         </div>
@@ -53,7 +56,7 @@
         <form id="filter-form" class="mt-4 mb-4">
           <div class="filter-container">
             <div class="filter-search">
-              Cerca descrizione:
+              Cerca:
               <input
                 name="query"
                 v-model="searchQuery"
@@ -62,6 +65,17 @@
             </div>
           </div>
         </form>
+        <div class="mb-2">
+          <button
+            class="show-all-button"
+            @click="showAllTransactions = !showAllTransactions"
+            :style="{
+              backgroundColor: showAllTransactions ? '#3f84e5' : '#3f84e5',
+            }"
+          >
+            {{ showAllTransactions ? "Mostra meno" : "Mostra tutto" }}
+          </button>
+        </div>
         <div class="table-container">
           <DemoGrid
             class="transaction-table"
@@ -142,6 +156,7 @@ const editableRows = ref({});
 const originalNotes = ref({});
 
 const date = ref(dayjs().toDate()); // the date picker is set to today by default
+const showAllTransactions = ref(false);
 
 const convertToLocalTime = (timestamp) => {
   return dayjs(timestamp).tz("Europe/Rome").format("YYYY-MM-DD HH:mm:ss");
@@ -170,7 +185,9 @@ const updateTransactions = (data) => {
 
 const filteredTransactions = computed(() => {
   let transactions = flatTransactions.value;
-
+  if (showAllTransactions.value) {
+    return transactions;
+  }
   // Sort the transactions array based on the created_at field in descending order
   transactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
@@ -349,6 +366,19 @@ onBeforeUnmount(() => {
 
 .label-text {
   margin-left: 5px;
+}
+
+.show-all-button {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .transaction-table {

@@ -6,7 +6,7 @@
           <v-autocomplete
             v-model="newTransaction.customer_name"
             :items="customerNames"
-            label="Customer Name"
+            label="Nome cliente"
             required
             clearable
             :rules="[rules.required]"
@@ -19,7 +19,7 @@
           <v-select
             v-model="newTransaction.title"
             :items="transactionType"
-            label="Title"
+            label="Title (tipo transazione)"
             required
             :rules="[rules.required]"
             class="responsive-input"
@@ -29,7 +29,7 @@
         <v-col cols="12">
           <v-text-field
             v-model="newTransaction.ts_amount"
-            label="Amount"
+            label="Importo"
             type="number"
             required
             :rules="[rules.required, validateAmount]"
@@ -40,7 +40,7 @@
         <v-col cols="12">
           <v-text-field
             v-model="newTransaction.accounting_date"
-            label="Accounting Date"
+            label="Data contabile"
             type="date"
             required
             :rules="[rules.required]"
@@ -52,7 +52,7 @@
         <v-col cols="12">
           <v-text-field
             v-model="newTransaction.ts_note"
-            label="Note"
+            label="Annotazioni"
             type="text"
             class="responsive-input"
           ></v-text-field>
@@ -64,7 +64,7 @@
             type="submit"
             color="primary"
             class="responsive-btn"
-            >Add Transaction</v-btn
+            >Aggiungi transazione</v-btn
           >
         </v-col>
       </v-row>
