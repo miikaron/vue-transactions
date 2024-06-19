@@ -31,7 +31,7 @@
             contengono la nota "Mirko" o "#" (es: #ieri)
           </p>
           <p>
-            Rimesse in cassa calcio: "Paga debito" con la nota "cassa calcio"  
+            Rimesse in cassa calcio: "Paga debito" che include la nota "calcio" (es: cassa calcio)
           </p>
           <p>
             Totale scommesse: "Scommesse" segnate tolte quelle "rimesse
@@ -208,7 +208,7 @@ const debitiPagatiContanti = computed(() => {
         !transaction.ts_note.trim().toLowerCase().includes("voucher") &&
         !transaction.ts_note.trim().toLowerCase().includes("mirko") &&
         !transaction.ts_note.trim().toLowerCase().includes("#") &&
-        !transaction.ts_note.trim().toLowerCase() === "cassa calcio"
+        !transaction.ts_note.trim().toLowerCase().includes("calcio")
     )
     .reduce((sum, transaction) => sum + Math.abs(transaction.ts_amount), 0)
     .toFixed(2);
@@ -242,7 +242,7 @@ const pagamentoVoucherOcassa = computed(() => {
     .toFixed(2);
   const cassaCalcioSum = filteredTransactionsWithoutMirkoOrYesterday.value
     .filter((transaction) =>
-      transaction.ts_note.trim().toLowerCase().includes("cassa")
+      transaction.ts_note.trim().toLowerCase().includes("calcio")
     )
     .reduce((sum, transaction) => sum + Math.abs(transaction.ts_amount), 0)
     .toFixed(2);
