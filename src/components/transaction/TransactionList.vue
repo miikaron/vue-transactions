@@ -23,16 +23,16 @@
             {{ scommesseSumTotal }}€
           </h2>
           <p>
-            Voucher = paga debito che include la nota "voucher" (maiuscolo o
+            Voucher = "Paga debito" che inclodono la nota "voucher" (maiuscolo o
             minuscolo è indifferente)
           </p>
           <p>
-            Scommesse segnate = transazione con titolo "Scommesse" che non
+            Scommesse segnate = transazioni con titolo "Scommesse" che non
             contengono la nota "mirko" o "#" (es: #ieri)
           </p>
           <p>
-            Rimesse in cassa calcio: "Paga debito" che include la nota "calcio"
-            (es: cassa calcio)
+            Rimesse in cassa calcio: "Paga debito" che includono la nota
+            "calcio" (es: cassa calcio)
           </p>
           <p>
             Totale scommesse: "scommesse segnate" tolte quelle "rimesse in cassa
@@ -105,14 +105,14 @@
                   @click="saveTransaction(row)"
                   class="save-button"
                 >
-                  SAVE
+                  SALVA
                 </button>
                 <button
                   v-else
                   @click="editTransaction(row)"
                   class="edit-button"
                 >
-                  EDIT
+                  MODIFICA
                 </button>
               </td>
               <td v-else>
