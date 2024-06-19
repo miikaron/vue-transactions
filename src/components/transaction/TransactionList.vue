@@ -5,7 +5,7 @@
         <div class="filter-date-range">
           <v-date-picker
             v-model="date"
-            :max-width="250"
+            :max-width="300"
             single
             :locale="it"
           ></v-date-picker>
@@ -23,19 +23,18 @@
             {{ scommesseSumTotal }}€
           </h2>
           <p>
-            Voucher = paga debito con "Ts_note" (scritto in maiuscolo o
-            minuscolo è indifferente) che contiene la scritta "VOUCHER"
+            Voucher = paga debito con "Ts_note" che contiene la scritta "VOUCHER" (scritto in maiuscolo o
+            minuscolo è indifferente)
           </p>
           <p>
             Scommesse (senza Mirko) = transazione con titolo "Scommesse" che non
-            contengono la nota "Mirko" o "ieri" (es: Fatta ieri)
+            contengono la nota "Mirko" o "#" (es: #ieri)
           </p>
           <p>
-            Rimesse in cassa calcio: "Paga debito" con la nota "cassa" (es:
-            Cassa calcio)
+            Rimesse in cassa calcio: "Paga debito" con la nota "cassa calcio"  
           </p>
           <p>
-            Totale scommesse: totale "Scommesse" segnate tolte quelle "rimesse
+            Totale scommesse: "Scommesse" segnate tolte quelle "rimesse
             in cassa calcio" e quelle di "Mirko"
           </p>
         </div>
@@ -43,8 +42,8 @@
         <div class="debiti">
           <h2 class="mt-4">Debiti pagati: {{ debitiPagatiContanti }}€</h2>
           <p>
-            Debiti pagati = debiti pagati in contanti, che non includono nella
-            nota "bancomat", "voucher", "cassa calcio", "ieri" o "mirko"
+            Debiti pagati = debiti pagati in contanti che non includono nella
+            nota: "bancomat", "voucher", "cassa calcio", "mirko" o "#"
           </p>
         </div>
       </v-col>
@@ -208,8 +207,8 @@ const debitiPagatiContanti = computed(() => {
         !transaction.ts_note.trim().toLowerCase().includes("bancomat") &&
         !transaction.ts_note.trim().toLowerCase().includes("voucher") &&
         !transaction.ts_note.trim().toLowerCase().includes("mirko") &&
-        !transaction.ts_note.trim().toLowerCase().includes("cassa") &&
-        !transaction.ts_note.trim().toLowerCase().includes("ieri")
+        !transaction.ts_note.trim().toLowerCase().includes("#") &&
+        !transaction.ts_note.trim().toLowerCase() === "cassa calcio"
     )
     .reduce((sum, transaction) => sum + Math.abs(transaction.ts_amount), 0)
     .toFixed(2);
@@ -220,7 +219,7 @@ const filteredTransactionsWithoutMirkoOrYesterday = computed(() => {
   return filteredTransactions.value.filter(
     (transaction) =>
       !transaction.ts_note.trim().toLowerCase().includes("mirko") &&
-      !transaction.ts_note.trim().toLowerCase().includes("ieri")
+      !transaction.ts_note.trim().toLowerCase().includes("#")
   );
 });
 
