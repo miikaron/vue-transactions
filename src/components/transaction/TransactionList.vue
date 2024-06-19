@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="4" class="d-flex align-center justify-end">
         <div class="filter-date-range">
-          <<v-date-picker
+          <v-date-picker
             v-model="date"
             :max-width="250"
             single
