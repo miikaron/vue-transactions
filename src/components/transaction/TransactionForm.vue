@@ -64,7 +64,7 @@
             type="submit"
             color="primary"
             class="responsive-btn"
-            >Aggiungi transazione</v-btn
+            >Aggiungi</v-btn
           >
         </v-col>
       </v-row>
