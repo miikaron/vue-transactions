@@ -23,7 +23,7 @@
             {{ scommesseSumTotal }}€
           </h2>
           <p>
-            Voucher = "Paga debito" che inclodono la nota "voucher" (maiuscolo o
+            Voucher = "Paga debito" che includono la nota "voucher" (maiuscolo o
             minuscolo è indifferente)
           </p>
           <p>
@@ -45,8 +45,8 @@
             Debiti pagati (contanti): {{ debitiPagatiContanti }}€
           </h2>
           <p>
-            Debiti pagati = transazioni "Paga debito" che non includono nella
-            nota: "bancomat", "voucher", "cassa calcio", "mirko" o "#"
+            Debiti pagati = transazioni "Paga debito" che non hanno nella nota:
+            "bancomat", "voucher", "cassa calcio", "mirko" o "#"
           </p>
         </div>
       </v-col>
