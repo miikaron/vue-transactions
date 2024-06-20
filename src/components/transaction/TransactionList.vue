@@ -85,7 +85,46 @@
           >
             <!-- Custom cell rendering -->
             <template #cell="{ row, column }">
-              <td v-if="column === 'ts_note'">
+              <td v-if="column === 'ts_amount'">
+                <span
+                  :style="{
+                    color:
+                      row.ts_amount < 0 &&
+                      row.title.toLowerCase() !== 'scommesse' &&
+                      row.ts_note.toLowerCase() !== 'mirko'
+                        ? '#8dab7f'
+                        : row.ts_amount >= 0 &&
+                          row.title.toLowerCase() !== 'scommesse' &&
+                          row.ts_note.toLowerCase() !== 'mirko'
+                        ? 'black'
+                        : row.title === 'Scommesse' &&
+                          row.ts_note.toLowerCase() !== 'mirko'
+                        ? '#f8333c'
+                        : row.ts_note.toLowerCase() === 'mirko'
+                        ? '#e3c5bb'
+                        : 'black',
+                  }"
+                  >{{ row.ts_amount || "" }}</span
+                >
+              </td>
+              <td v-else-if="column === 'title'">
+                <span
+                  :style="{
+                    color:
+                      row.title.toLowerCase() === 'scommesse' &&
+                      row.ts_note.toLowerCase() !== 'mirko'
+                        ? '#f8333c'
+                        : row.title.toLowerCase() === '-paga debito' &&
+                          row.ts_note.toLowerCase() !== 'mirko'
+                        ? '#8dab7f'
+                        : row.ts_note.toLowerCase() === 'mirko'
+                        ? '#e3c5bb'
+                        : 'black',
+                  }"
+                  >{{ row.title || "" }}</span
+                >
+              </td>
+              <td v-else-if="column === 'ts_note'">
                 <input
                   v-if="editableRows[row.id]"
                   type="text"
@@ -144,9 +183,9 @@ const toast = useToast();
 const searchQuery = ref("");
 const gridColumns = [
   "created_at",
+  "title",
   "ts_amount",
   "customer_name",
-  "title",
   "ts_note",
   "actions",
   "accounting_date",
