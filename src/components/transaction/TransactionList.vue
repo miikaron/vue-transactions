@@ -89,18 +89,13 @@
                 <span
                   :style="{
                     color:
-                      row.ts_amount < 0 &&
-                      row.title.toLowerCase() !== 'scommesse' &&
+                      row.title.toLowerCase() === 'scommesse' &&
                       row.ts_note.toLowerCase() !== 'mirko'
-                        ? '#8dab7f'
-                        : row.ts_amount >= 0 &&
-                          row.title.toLowerCase() !== 'scommesse' &&
-                          row.ts_note.toLowerCase() !== 'mirko'
-                        ? 'black'
-                        : row.title === 'Scommesse' &&
-                          row.ts_note.toLowerCase() !== 'mirko'
                         ? '#f8333c'
-                        : row.ts_note.toLowerCase() === 'mirko'
+                        : row.title.toLowerCase() === '-paga debito' &&
+                          row.ts_note.toLowerCase() !== 'mirko'
+                        ? '#8dab7f'
+                        : row.ts_note.toLowerCase().startsWith('mirko')
                         ? '#e3c5bb'
                         : 'black',
                   }"
@@ -117,7 +112,7 @@
                         : row.title.toLowerCase() === '-paga debito' &&
                           row.ts_note.toLowerCase() !== 'mirko'
                         ? '#8dab7f'
-                        : row.ts_note.toLowerCase() === 'mirko'
+                        : row.ts_note.toLowerCase().startsWith('mirko')
                         ? '#e3c5bb'
                         : 'black',
                   }"
