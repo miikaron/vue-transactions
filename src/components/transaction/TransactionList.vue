@@ -28,7 +28,7 @@
           </p>
           <p>
             Scommesse segnate = transazioni con titolo "Scommesse" che non
-            contengono la nota "mirko" o "#" (es: #ieri)
+            contengono un "#" (es: #ieri) o che sono uguali a "Mirko"
           </p>
           <p>
             Rimesse in cassa calcio: "Paga debito" che includono la nota
@@ -269,8 +269,8 @@ const debitiPagatiContanti = computed(() => {
 const filteredTransactionsWithoutMirkoOrYesterday = computed(() => {
   return filteredTransactions.value.filter(
     (transaction) =>
-      !transaction.ts_note.trim().toLowerCase().includes("mirko") &&
-      !transaction.ts_note.trim().toLowerCase().includes("#")
+      !transaction.ts_note.trim().toLowerCase().includes("#") &&
+      transaction.ts_note.trim().toLowerCase() !== "mirko"
   );
 });
 
